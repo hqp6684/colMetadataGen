@@ -25,13 +25,15 @@ var s = fs.createReadStream('./mtcars.csv')
         dataArray = csvToArray(line);
         dataArray.map(function(data,index){
             if(data){
-                if(isNaN(data)){metaData[index].numericCount += 1; return};
-                if(new Date(data) === 'Invalid Date'){
+                if(!isNaN(data)){metaData[index].numericCount += 1; return};
+                if(new Date(data) == 'Invalid Date'){
+                    console.log(data +" is not date");
                     metaData[index].factorCount +=1;
                     return;
-                }else{ metaData[index].dateCount +=1; return;}
+                }else{ console.log(data + ' is date') ;metaData[index].dateCount +=1; return;}
+
             }else{
-                metaData[index].emptyCount += 1;
+                // metaData[index].emptyCount += 1;
                 return;
             }
         })
@@ -48,7 +50,23 @@ var s = fs.createReadStream('./mtcars.csv')
     })
     .on('end', function(){
         console.log('Read entire file.');
-        fs.writeFile('./report.txt', JSON.stringify(metaData));
+        var report = {};
+        for(var col in metaData){
+            // console.log(col);
+            var highest = 0;
+            var type = '';
+            for(var countType in metaData[col]){
+                if(metaData[col][countType] > highest){
+
+                    higest =  metaData[col][countType];
+                    type = countType;
+                }
+            }
+            report[col] = type;
+
+        }
+
+        fs.writeFile('./report.txt', JSON.stringify(report));
         console.log(metaData);
     })
 );
@@ -75,7 +93,7 @@ var csvToArray = function (text) {
 };
 
 function MetaDataCount(){
-    this.emptyCount = 0;
+    // this.emptyCount = 0;
     this.dateCount = 0;
     this.numericCount = 0;
     this.factorCount=0;
