@@ -1,0 +1,15 @@
+{
+  "name": "parse-large-csv",
+  "version": "1.0.0",
+  "description": "parse csv line by line",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "event-stream": "^3.3.4",
+    "fast-csv": "^2.3.0"
+  }
+}
