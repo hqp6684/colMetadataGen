@@ -1,1 +1,1 @@
-{"0":"factorCount","1":"numericCount","2":"numericCount","3":"numericCount","4":"numericCount","5":"numericCount","6":"numericCount","7":"numericCount","8":"numericCount","9":"numericCount","10":"numericCount","11":"numericCount"}
+{"0":"varchar","1":"double","2":"double","3":"double","4":"double","5":"double","6":"double","7":"double","8":"double","9":"double","10":"double","11":"double"}

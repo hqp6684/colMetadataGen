@@ -27,10 +27,14 @@ var s = fs.createReadStream('./mtcars.csv')
             if(data){
                 if(!isNaN(data)){metaData[index].numericCount += 1; return};
                 if(new Date(data) == 'Invalid Date'){
-                    console.log(data +" is not date");
+                    // console.log(data +" is not date");
                     metaData[index].factorCount +=1;
                     return;
-                }else{ console.log(data + ' is date') ;metaData[index].dateCount +=1; return;}
+                }else{ 
+                    // console.log(data + ' is date') ;
+                    metaData[index].dateCount +=1; 
+                    return;
+                }
 
             }else{
                 // metaData[index].emptyCount += 1;
@@ -51,6 +55,7 @@ var s = fs.createReadStream('./mtcars.csv')
     .on('end', function(){
         console.log('Read entire file.');
         var report = {};
+        var wsteam = fs.createWriteStream('./type.txt');
         for(var col in metaData){
             // console.log(col);
             var highest = 0;
@@ -61,13 +66,25 @@ var s = fs.createReadStream('./mtcars.csv')
                     higest =  metaData[col][countType];
                     type = countType;
                 }
-            }
-            report[col] = type;
+            };
 
+            // switch(type){
+            //     case 'numericCount' : report[col] = 'double'; break;
+            //     case 'factorCount'  : report[col] = 'varchar'; break;
+            //     case 'dateCount'    : report[col] = 'varchar'; break;
+            // }
+            switch(type){
+                case 'numericCount' : report[col] = 'double';  break;
+                case 'factorCount'  : report[col] = 'varchar'; break;
+                case 'dateCount'    : report[col] = 'varchar'; break;
+            }
+            wsteam.write(report[col]+'\n');
         }
+        
 
         fs.writeFile('./report.txt', JSON.stringify(report));
-        console.log(metaData);
+        wsteam.end();
+        // console.log(metaData);
     })
 );
 

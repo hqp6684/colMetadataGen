@@ -1,0 +1,12 @@
+varchar
+double
+double
+double
+double
+double
+double
+double
+double
+double
+double
+double
